@@ -148,6 +148,10 @@ html.lenis body {
   display: flex;
   width: max-content;
   animation: dish-scroll 55s linear infinite;
+  /* Promote to its own GPU layer so the crawl stays smooth and jank-free. */
+  will-change: transform;
+  transform: translateZ(0);
+  backface-visibility: hidden;
 }
 .dish-track > figure {
   margin-right: 1rem;
@@ -170,11 +174,20 @@ html.lenis body {
 }
 @keyframes dish-scroll {
   from {
-    transform: translateX(0);
+    transform: translate3d(0, 0, 0);
   }
   to {
-    transform: translateX(-50%);
+    transform: translate3d(-50%, 0, 0);
   }
+}
+
+/* Hide the scrollbar on the swipeable reviews carousel (still fully scrollable). */
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
 }
 
 /* ── Marquee (single, motivated: a warm "what we serve" strip) ──────────── */

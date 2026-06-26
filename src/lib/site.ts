@@ -41,6 +41,12 @@ export const site = {
     { day: "Sunday", open: "8:00", close: "15:00", closed: false },
   ],
 
+  // "Leave a review" link. Leave empty ("") and the site falls back to the
+  // Google Maps listing (which still lets people write a review). For a link
+  // that opens the review box directly, find the café's Place ID and use:
+  //   https://search.google.com/local/writereview?placeid=YOUR_PLACE_ID
+  reviewUrl: "",
+
   // Social links. Leave a value empty ("") to hide that icon.
   // When you're ready to make the Gallery auto-update from Instagram, see
   // src/components/Gallery.tsx for the documented integration hook.
