@@ -1,5 +1,3 @@
-import { Crown } from "@phosphor-icons/react/dist/ssr";
-
 const words = [
   "Full English",
   "Eggs Royale",
@@ -17,15 +15,15 @@ export default function Marquee() {
   return (
     <section
       aria-hidden="true"
-      className="overflow-hidden border-y border-ink/10 bg-ink py-5 text-cream"
+      className="overflow-hidden border-y border-ink/10 bg-ink py-4 text-cream/85"
     >
       <div className="marquee">
         {strip.map((w, i) => (
           <span key={i} className="flex items-center whitespace-nowrap">
-            <span className="font-display text-2xl tracking-tight sm:text-3xl">
+            <span className="font-display text-lg tracking-tight sm:text-2xl">
               {w}
             </span>
-            <Crown weight="fill" className="mx-7 text-gold sm:mx-9" size={20} />
+            <span className="mx-6 h-1 w-1 rounded-full bg-gold/70 sm:mx-9 sm:h-1.5 sm:w-1.5" />
           </span>
         ))}
       </div>

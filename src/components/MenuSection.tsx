@@ -36,13 +36,13 @@ export default function MenuSection() {
   const category = menu.find((c) => c.id === active) ?? menu[0];
 
   return (
-    <section id="menu" className="scroll-mt-24 bg-cream py-24 sm:py-32">
+    <section id="menu" className="scroll-mt-28 bg-cream py-16 sm:py-32">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         {/* Header */}
         <div className="max-w-2xl">
           <h2
             data-reveal
-            className="font-display text-5xl tracking-tight text-ink sm:text-6xl"
+            className="font-display text-4xl tracking-tight text-ink sm:text-6xl"
           >
             The Menu
           </h2>

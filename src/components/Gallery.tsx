@@ -3,20 +3,20 @@ import { InstagramLogo } from "@phosphor-icons/react/dist/ssr";
 import { galleryPhotos } from "@/lib/gallery";
 import { site } from "@/lib/site";
 
-function ratioClass(shape: string | undefined, i: number) {
-  if (shape === "tall") return "aspect-[3/4]";
-  return i % 3 === 0 ? "aspect-square" : "aspect-[4/3]";
+function shapeOf(shape: string | undefined, i: number) {
+  if (shape === "tall") return "tall";
+  return i % 3 === 0 ? "square" : "wide";
 }
 
 export default function Gallery() {
   return (
-    <section id="gallery" className="scroll-mt-24 bg-cream py-24 sm:py-32">
+    <section id="gallery" className="scroll-mt-28 bg-cream py-16 sm:py-32">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="flex flex-col items-start justify-between gap-6 sm:flex-row sm:items-end">
           <div>
             <h2
               data-reveal
-              className="font-display text-5xl tracking-tight text-ink sm:text-6xl"
+              className="font-display text-4xl tracking-tight text-ink sm:text-6xl"
             >
               Straight from the café
             </h2>
@@ -38,15 +38,13 @@ export default function Gallery() {
           )}
         </div>
 
-        <div className="masonry mt-12">
+        <div className="masonry mt-10 sm:mt-12">
           {galleryPhotos.map((photo, i) => (
             <figure
               key={photo.src}
               data-reveal
-              className={`group relative ${ratioClass(
-                photo.shape,
-                i,
-              )} overflow-hidden rounded-2xl`}
+              data-shape={shapeOf(photo.shape, i)}
+              className="group relative overflow-hidden rounded-xl sm:rounded-2xl"
             >
               <Image
                 src={photo.src}

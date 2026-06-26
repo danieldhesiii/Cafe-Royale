@@ -11,7 +11,7 @@ export default function Visit() {
   )}`;
 
   return (
-    <section id="visit" className="scroll-mt-24 bg-cream-deep py-24 sm:py-32">
+    <section id="visit" className="scroll-mt-28 bg-cream-deep py-16 sm:py-32">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <div className="grid gap-12 lg:grid-cols-2 lg:gap-16">
           {/* Details */}

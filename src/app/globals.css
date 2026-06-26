@@ -87,14 +87,34 @@ html.lenis body {
   }
 }
 
-/* ── Gallery masonry ────────────────────────────────────────────────────── */
+/* ── Gallery ────────────────────────────────────────────────────────────
+   Mobile: a tidy uniform 2-up grid of small square tiles (easy to scan while
+   scrolling). md+: the editorial column masonry with varied photo shapes,
+   driven by [data-shape] so the aspect-ratios live here, not in the markup. */
 .masonry {
-  column-gap: 1rem;
-  column-count: 2;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.55rem;
+}
+.masonry > figure {
+  aspect-ratio: 1 / 1;
 }
 @media (min-width: 768px) {
   .masonry {
+    display: block;
     column-count: 3;
+    column-gap: 1rem;
+  }
+  .masonry > figure {
+    break-inside: avoid;
+    margin-bottom: 1rem;
+    aspect-ratio: 1 / 1;
+  }
+  .masonry > figure[data-shape="tall"] {
+    aspect-ratio: 3 / 4;
+  }
+  .masonry > figure[data-shape="wide"] {
+    aspect-ratio: 4 / 3;
   }
 }
 @media (min-width: 1280px) {
@@ -102,26 +122,19 @@ html.lenis body {
     column-count: 4;
   }
 }
-.masonry > * {
-  break-inside: avoid;
-  margin-bottom: 1rem;
-}
 
-/* ── Swiper overrides (signature dishes coverflow) ──────────────────────── */
-.swiper-pagination-bullet {
-  background: var(--color-ink) !important;
-  opacity: 0.25 !important;
-}
-.swiper-pagination-bullet-active {
-  background: var(--color-gold) !important;
-  opacity: 1 !important;
+/* ── Swiper (crowd favourites) ──────────────────────────────────────────
+   Linear easing turns the long-duration autoplay into one continuous crawl
+   instead of a stepped slide-pause-slide motion. */
+.crowd-swiper .swiper-wrapper {
+  transition-timing-function: linear !important;
 }
 
 /* ── Marquee (single, motivated: a warm "what we serve" strip) ──────────── */
 .marquee {
   display: flex;
   width: max-content;
-  animation: marquee 38s linear infinite;
+  animation: marquee 64s linear infinite;
 }
 @media (prefers-reduced-motion: reduce) {
   .marquee {

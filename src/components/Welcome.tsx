@@ -9,7 +9,7 @@ const points = [
 
 export default function Welcome() {
   return (
-    <section id="about" className="mx-auto max-w-[1400px] px-5 py-24 sm:px-8 sm:py-32">
+    <section id="about" className="mx-auto max-w-[1400px] scroll-mt-28 px-5 py-16 sm:px-8 sm:py-32">
       <div className="grid items-center gap-12 lg:grid-cols-2 lg:gap-20">
         <div className="relative aspect-[4/5] overflow-hidden rounded-2xl sm:aspect-[5/4] lg:aspect-[4/5]">
           <Image

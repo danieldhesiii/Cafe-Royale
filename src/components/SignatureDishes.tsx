@@ -2,11 +2,10 @@
 
 import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Pagination, Autoplay } from "swiper/modules";
+import { EffectCoverflow, Autoplay } from "swiper/modules";
 import { signatureDishes } from "@/lib/gallery";
 import "swiper/css";
 import "swiper/css/effect-coverflow";
-import "swiper/css/pagination";
 
 export default function SignatureDishes() {
   const reduced =
@@ -32,12 +31,16 @@ export default function SignatureDishes() {
 
       <div className="mt-14">
         <Swiper
-          modules={[EffectCoverflow, Pagination, Autoplay]}
+          modules={[EffectCoverflow, Autoplay]}
           effect="coverflow"
           grabCursor
           centeredSlides
           loop
           slidesPerView="auto"
+          // A long speed + zero delay turns the autoplay into one continuous,
+          // seamless crawl (the .crowd-swiper CSS makes the easing linear) so it
+          // never visibly stops and snaps back.
+          speed={6000}
           coverflowEffect={{
             rotate: 0,
             stretch: 0,
@@ -46,10 +49,15 @@ export default function SignatureDishes() {
             slideShadows: false,
           }}
           autoplay={
-            reduced ? false : { delay: 2600, disableOnInteraction: false }
+            reduced
+              ? false
+              : {
+                  delay: 0,
+                  disableOnInteraction: false,
+                  pauseOnMouseEnter: true,
+                }
           }
-          pagination={{ clickable: true }}
-          className="!px-5 !pb-14"
+          className="crowd-swiper !px-5 !pb-10"
         >
           {signatureDishes.map((dish) => (
             <SwiperSlide

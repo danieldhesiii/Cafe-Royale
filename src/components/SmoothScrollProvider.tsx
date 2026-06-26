@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const NAV_OFFSET = 84; // height of the sticky navbar, so anchors don't hide behind it
+const NAV_OFFSET = 100; // navbar height + breathing room, so a section's top sits clearly below the bar
 
 export default function SmoothScrollProvider({
   children,
@@ -52,6 +52,14 @@ export default function SmoothScrollProvider({
       lenis.scrollTo(target as HTMLElement, {
         offset: -NAV_OFFSET,
         duration: prefersReduced ? 0 : 1.1,
+        // Images loading below the fold can shift the target mid-scroll, leaving
+        // the link landing short ("half way"). A quick re-aim on completion snaps
+        // to the section's final resting position.
+        onComplete: () =>
+          lenis.scrollTo(target as HTMLElement, {
+            offset: -NAV_OFFSET,
+            duration: 0.25,
+          }),
       });
     };
     document.addEventListener("click", onClick);
