@@ -1,19 +1,13 @@
-"use client";
-
 import Image from "next/image";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { EffectCoverflow, Autoplay } from "swiper/modules";
 import { signatureDishes } from "@/lib/gallery";
-import "swiper/css";
-import "swiper/css/effect-coverflow";
 
 export default function SignatureDishes() {
-  const reduced =
-    typeof window !== "undefined" &&
-    window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  // Rendered twice back-to-back. The CSS track animates by exactly -50%, so the
+  // loop point lands on an identical card — seamless, with no gap or reload.
+  const strip = [...signatureDishes, ...signatureDishes];
 
   return (
-    <section className="overflow-hidden bg-cream-deep py-24 sm:py-28">
+    <section className="overflow-hidden bg-cream-deep py-16 sm:py-28">
       <div className="mx-auto max-w-[1400px] px-5 sm:px-8">
         <h2
           data-reveal
@@ -21,65 +15,33 @@ export default function SignatureDishes() {
         >
           Crowd favourites
         </h2>
-        <p
-          data-reveal
-          className="mx-auto mt-4 max-w-md text-center text-ink-soft"
-        >
+        <p data-reveal className="mx-auto mt-4 max-w-md text-center text-ink-soft">
           The plates that keep Romford coming back.
         </p>
       </div>
 
-      <div className="mt-14">
-        <Swiper
-          modules={[EffectCoverflow, Autoplay]}
-          effect="coverflow"
-          grabCursor
-          centeredSlides
-          loop
-          slidesPerView="auto"
-          // A long speed + zero delay turns the autoplay into one continuous,
-          // seamless crawl (the .crowd-swiper CSS makes the easing linear) so it
-          // never visibly stops and snaps back.
-          speed={6000}
-          coverflowEffect={{
-            rotate: 0,
-            stretch: 0,
-            depth: 140,
-            modifier: 2.4,
-            slideShadows: false,
-          }}
-          autoplay={
-            reduced
-              ? false
-              : {
-                  delay: 0,
-                  disableOnInteraction: false,
-                  pauseOnMouseEnter: true,
-                }
-          }
-          className="crowd-swiper !px-5 !pb-10"
-        >
-          {signatureDishes.map((dish) => (
-            <SwiperSlide
-              key={dish.src}
-              className="!w-[280px] sm:!w-[360px] lg:!w-[420px]"
+      <div className="dish-marquee mt-12 sm:mt-14">
+        <div className="dish-track">
+          {strip.map((dish, i) => (
+            <figure
+              key={`${dish.src}-${i}`}
+              aria-hidden={i >= signatureDishes.length}
+              className="group relative aspect-[4/5] w-[240px] shrink-0 overflow-hidden rounded-2xl shadow-xl shadow-ink/10 sm:w-[320px] lg:w-[380px]"
             >
-              <figure className="group relative aspect-[4/5] overflow-hidden rounded-2xl shadow-xl shadow-ink/10">
-                <Image
-                  src={dish.src}
-                  alt={dish.alt}
-                  fill
-                  sizes="(max-width: 640px) 280px, (max-width: 1024px) 360px, 420px"
-                  className="object-cover transition-transform duration-700 group-hover:scale-105"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
-                <figcaption className="absolute bottom-5 left-5 font-display text-2xl text-cream">
-                  {dish.caption}
-                </figcaption>
-              </figure>
-            </SwiperSlide>
+              <Image
+                src={dish.src}
+                alt={dish.alt}
+                fill
+                sizes="(max-width: 640px) 240px, (max-width: 1024px) 320px, 380px"
+                className="object-cover transition-transform duration-700 group-hover:scale-105"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-ink/70 via-transparent to-transparent" />
+              <figcaption className="absolute bottom-5 left-5 font-display text-2xl text-cream">
+                {dish.caption}
+              </figcaption>
+            </figure>
           ))}
-        </Swiper>
+        </div>
       </div>
     </section>
   );

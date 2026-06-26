@@ -123,11 +123,58 @@ html.lenis body {
   }
 }
 
-/* ── Swiper (crowd favourites) ──────────────────────────────────────────
-   Linear easing turns the long-duration autoplay into one continuous crawl
-   instead of a stepped slide-pause-slide motion. */
-.crowd-swiper .swiper-wrapper {
-  transition-timing-function: linear !important;
+/* ── Crowd favourites (seamless image marquee) ──────────────────────────
+   Cards are rendered twice; the track slides by exactly -50% so the loop
+   point is an identical card — no gap, no snap, nothing to reload. Soft
+   edge fade so cards ease in and out rather than popping. */
+.dish-marquee {
+  position: relative;
+  -webkit-mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+  mask-image: linear-gradient(
+    to right,
+    transparent,
+    #000 7%,
+    #000 93%,
+    transparent
+  );
+}
+.dish-track {
+  display: flex;
+  width: max-content;
+  animation: dish-scroll 55s linear infinite;
+}
+.dish-track > figure {
+  margin-right: 1rem;
+}
+@media (min-width: 640px) {
+  .dish-track > figure {
+    margin-right: 1.5rem;
+  }
+}
+.dish-marquee:hover .dish-track {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .dish-marquee {
+    overflow-x: auto;
+  }
+  .dish-track {
+    animation: none;
+  }
+}
+@keyframes dish-scroll {
+  from {
+    transform: translateX(0);
+  }
+  to {
+    transform: translateX(-50%);
+  }
 }
 
 /* ── Marquee (single, motivated: a warm "what we serve" strip) ──────────── */
