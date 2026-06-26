@@ -123,12 +123,18 @@ html.lenis body {
   }
 }
 
-/* ── Crowd favourites (seamless image marquee) ──────────────────────────
-   Cards are rendered twice; the track slides by exactly -50% so the loop
-   point is an identical card — no gap, no snap, nothing to reload. Soft
-   edge fade so cards ease in and out rather than popping. */
-.dish-marquee {
-  position: relative;
+/* ── Crowd favourites (auto-scrolling + swipeable) ──────────────────────
+   A native horizontal scroller that JS nudges forward continuously, so it
+   crawls on its own AND can be swiped (touch), dragged (mouse) or wheeled
+   through to move faster. The card strip is duplicated and the JS wraps by
+   exactly one set, so the loop stays seamless. Soft edge fade on both sides. */
+.dish-scroller {
+  display: flex;
+  overflow-x: auto;
+  overflow-y: hidden;
+  touch-action: pan-x;
+  overscroll-behavior-x: contain;
+  cursor: grab;
   -webkit-mask-image: linear-gradient(
     to right,
     transparent,
@@ -144,44 +150,11 @@ html.lenis body {
     transparent
   );
 }
-.dish-track {
-  display: flex;
-  width: max-content;
-  animation: dish-scroll 55s linear infinite;
-  /* Promote to its own GPU layer so the crawl stays smooth and jank-free. */
-  will-change: transform;
-  transform: translateZ(0);
-  backface-visibility: hidden;
-}
-.dish-track > figure {
-  margin-right: 1rem;
-}
-@media (min-width: 640px) {
-  .dish-track > figure {
-    margin-right: 1.5rem;
-  }
-}
-.dish-marquee:hover .dish-track {
-  animation-play-state: paused;
-}
-@media (prefers-reduced-motion: reduce) {
-  .dish-marquee {
-    overflow-x: auto;
-  }
-  .dish-track {
-    animation: none;
-  }
-}
-@keyframes dish-scroll {
-  from {
-    transform: translate3d(0, 0, 0);
-  }
-  to {
-    transform: translate3d(-50%, 0, 0);
-  }
+.dish-scroller.is-dragging {
+  cursor: grabbing;
 }
 
-/* Hide the scrollbar on the swipeable reviews carousel (still fully scrollable). */
+/* Hide the scrollbar on the swipeable carousels (still fully scrollable). */
 .no-scrollbar {
   -ms-overflow-style: none;
   scrollbar-width: none;
